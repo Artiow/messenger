@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.artiow.examples.messenger</groupId>
-    <artifactId>eureka</artifactId>
-    <version>1.0</version>
+    <artifactId>audit-lib</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
-    <name>eureka</name>
+    <name>audit-lib</name>
 
     <parent>
         <groupId>com.artiow.examples</groupId>
@@ -18,21 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.name}</finalName>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

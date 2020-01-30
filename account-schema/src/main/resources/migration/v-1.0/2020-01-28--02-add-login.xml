@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="2020-01-28--02-add-login-1" author="artiow">
+        <preConditions>
+            <and>
+                <tableExists tableName="user"/>
+                <not><columnExists tableName="user" columnName="login"/></not>
+                <not><columnExists tableName="user" columnName="password"/></not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="user">
+            <column name="login" type="varchar(31)"/>
+            <column name="password" type="varchar(63)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="user">
+                <column name="login"/>
+                <column name="password"/>
+            </dropColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2020-01-28--02-add-login-2" author="artiow">
+        <preConditions>
+            <columnExists tableName="user" columnName="login"/>
+        </preConditions>
+
+        <addNotNullConstraint tableName="user" columnName="login"/>
+        <addUniqueConstraint tableName="user" columnNames="login" constraintName="user_login_uindex"/>
+
+        <rollback>
+            <dropNotNullConstraint tableName="user" columnName="login"/>
+            <dropUniqueConstraint tableName="user" constraintName="user_login_uindex"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2020-01-28--02-add-login-3" author="artiow">
+        <preConditions>
+            <columnExists tableName="user" columnName="password"/>
+        </preConditions>
+
+        <addNotNullConstraint tableName="user" columnName="password"/>
+
+        <rollback>
+            <dropNotNullConstraint tableName="user" columnName="password"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

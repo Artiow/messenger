@@ -1,0 +1,18 @@
+spring.application.name: account
+server.port: 0
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://haproxy:5432/account"
+    driverClassName: "org.postgresql.Driver"
+    username: account
+    password: account
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+
+eureka.client.service-url:
+  defaultZone: http://eureka:8761/eureka/

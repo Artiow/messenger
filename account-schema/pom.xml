@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.artiow.examples.messenger</groupId>
-    <artifactId>eureka</artifactId>
-    <version>1.0</version>
+    <artifactId>account-schema</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
-    <name>eureka</name>
+    <name>account-schema</name>
 
     <parent>
         <groupId>com.artiow.examples</groupId>
@@ -18,18 +18,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
                 <configuration>
-                    <finalName>${project.name}</finalName>
+                    <propertyFile>liquibase.properties</propertyFile>
+                    <changeLogFile>migration/changelog.xml</changeLogFile>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="2020-01-28--01-jpa-audit-1" author="artiow">
+        <preConditions>
+            <and>
+                <tableExists tableName="user"/>
+                <not><columnExists tableName="user" columnName="created_by_id"/></not>
+                <not><columnExists tableName="user" columnName="created_date"/></not>
+                <not><columnExists tableName="user" columnName="last_modified_by_id"/></not>
+                <not><columnExists tableName="user" columnName="last_modified_date"/></not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="user">
+            <column name="created_by_id" type="bigint"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by_id" type="bigint"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="user">
+                <column name="created_by_id"/>
+                <column name="created_date"/>
+                <column name="last_modified_by_id"/>
+                <column name="last_modified_date"/>
+            </dropColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2020-01-28--01-jpa-audit-2" author="artiow">
+        <preConditions>
+            <and>
+                <columnExists tableName="user" columnName="created_by_id"/>
+                <columnExists tableName="user" columnName="created_date"/>
+                <columnExists tableName="user" columnName="last_modified_by_id"/>
+                <columnExists tableName="user" columnName="last_modified_date"/>
+            </and>
+        </preConditions>
+
+        <addForeignKeyConstraint baseTableName="user"
+                                 baseColumnNames="created_by_id"
+                                 constraintName="created_by_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user"
+                                 baseColumnNames="last_modified_by_id"
+                                 constraintName="last_modified_by_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="user" constraintName="created_by_id_fk"/>
+            <dropForeignKeyConstraint baseTableName="user" constraintName="last_modified_by_id_fk"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

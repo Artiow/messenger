@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="2020-01-27--01-initial-1" author="artiow">
+        <preConditions>
+            <not><tableExists tableName="user"/></not>
+        </preConditions>
+
+        <createTable tableName="user">
+            <column name="id" type="bigserial"/>
+            <column name="version" type="bigint"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="user"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2020-01-27--01-initial-2" author="artiow">
+        <preConditions>
+            <and>
+                <columnExists tableName="user" columnName="id"/>
+            </and>
+        </preConditions>
+
+        <addPrimaryKey tableName="user" columnNames="id" constraintName="user_pk"/>
+
+        <rollback>
+            <dropPrimaryKey tableName="user" constraintName="user_pk"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2020-01-27--01-initial-3" author="artiow">
+        <preConditions>
+            <columnExists tableName="user" columnName="version"/>
+        </preConditions>
+
+        <addDefaultValue tableName="user" columnName="version" defaultValueNumeric="0"/>
+        <addNotNullConstraint tableName="user" columnName="version"/>
+
+        <rollback>
+            <dropDefaultValue tableName="user" columnName="version"/>
+            <dropNotNullConstraint tableName="user" columnName="version"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

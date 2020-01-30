@@ -1,0 +1,21 @@
+version: '3.7'
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
+services:
+  haproxy:
+    build: haproxy/
+    extra_hosts:
+      - "internal:172.17.0.1"
+  eureka:
+    build: eureka/
+    depends_on:
+      - haproxy
+  account:
+    build: account/
+    depends_on:
+      - eureka
