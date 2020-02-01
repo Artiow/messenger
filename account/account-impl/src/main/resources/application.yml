@@ -12,7 +12,11 @@ spring:
     hibernate.ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
+      hibernate.default_schema: public
       hibernate.temp.use_jdbc_metadata_defaults: false
 
 eureka.client.service-url:
   defaultZone: http://eureka:8761/eureka/
+
+logging:
+  file: /var/log/account.log

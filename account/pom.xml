@@ -6,8 +6,8 @@
 
     <groupId>com.artiow.examples.messenger</groupId>
     <artifactId>account</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>0.1</version>
+    <packaging>pom</packaging>
     <name>account</name>
 
     <parent>
@@ -16,35 +16,43 @@
         <version>0.1</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.artiow.examples.messenger</groupId>
-            <artifactId>account-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-    </dependencies>
+    <properties>
+        <account-api.version>0.1</account-api.version>
+        <account-impl.version>0.1</account-impl.version>
+        <account-domain.version>0.1</account-domain.version>
+        <account-schema.version>0.1</account-schema.version>
+    </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.name}</finalName>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.artiow.examples.messenger</groupId>
+                <artifactId>account-api</artifactId>
+                <version>${account-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.artiow.examples.messenger</groupId>
+                <artifactId>account-impl</artifactId>
+                <version>${account-impl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.artiow.examples.messenger</groupId>
+                <artifactId>account-domain</artifactId>
+                <version>${account-domain.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.artiow.examples.messenger</groupId>
+                <artifactId>account-schema</artifactId>
+                <version>${account-schema.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>account-api</module>
+        <module>account-impl</module>
+        <module>account-domain</module>
+        <module>account-schema</module>
+    </modules>
 
 </project>

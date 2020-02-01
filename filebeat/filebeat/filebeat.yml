@@ -1,0 +1,11 @@
+logging.metrics:
+  enabled: false
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - "/var/log/share/*.log"
+
+output.logstash:
+  hosts: ["logstash:5044"]

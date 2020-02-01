@@ -4,26 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.artiow.examples.messenger</groupId>
     <artifactId>account-schema</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
     <name>account-schema</name>
 
     <parent>
-        <groupId>com.artiow.examples</groupId>
-        <artifactId>messenger</artifactId>
+        <groupId>com.artiow.examples.messenger</groupId>
+        <artifactId>account</artifactId>
         <version>0.1</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,21 +1,39 @@
 version: '3.7'
 
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.18.0.0/16
-
 services:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.2
+    ports:
+      - "5601:5601"
+  elasticsearch:
+    build: elasticsearch/
+  logstash:
+    build: logstash/
+  filebeat:
+    build: filebeat/
+    volumes:
+      - "logvolume:/var/log/share"
   haproxy:
     build: haproxy/
     extra_hosts:
       - "internal:172.17.0.1"
   eureka:
     build: eureka/
-    depends_on:
-      - haproxy
+    volumes:
+      - "logvolume:/var/log"
   account:
     build: account/
+    volumes:
+      - "logvolume:/var/log"
     depends_on:
       - eureka
+      - haproxy
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
+volumes:
+  logvolume:
