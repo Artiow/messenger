@@ -1,8 +1,4 @@
-- pipeline.id: haproxy
-  pipeline.workers: 1
-  pipeline.batch.size: 1
-  path.config: "/usr/share/logstash/pipeline/haproxy_pipeline.conf"
+- pipeline.id: syslog
+  path.config: "/usr/share/logstash/pipeline/syslog_pipeline.conf"
 - pipeline.id: filebeat
-  pipeline.workers: 1
-  pipeline.batch.size: 1
   path.config: "/usr/share/logstash/pipeline/filebeat_pipeline.conf"

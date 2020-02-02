@@ -3,7 +3,11 @@ logging.metrics:
 
 filebeat.inputs:
   - type: log
-    enabled: true
+    tags: ['log', 'java']
+    multiline:
+      pattern: '^\d{4}\-\d{2}\-\d{2}(\s+|T)\d{2}\:\d{2}\:\d{2}(\.|\,)\d{3}\s+(TRACE|DEBUG|NOTICE|INFO|WARN|ERROR|FATAL)'
+      negate: true
+      match: after
     paths:
       - "/var/log/share/*.log"
 
