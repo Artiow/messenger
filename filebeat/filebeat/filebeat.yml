@@ -1,15 +1,23 @@
 logging.metrics:
   enabled: false
 
+filebeat.modules:
+  - module: nginx
+    access.var.paths: ['/var/log/share/nginx/access.log']
+    error.var.paths: ['/var/log/share/nginx/error.log']
+
 filebeat.inputs:
   - type: log
     tags: ['log', 'java']
+    paths: ['/var/log/share/java/*.log']
     multiline:
-      pattern: '^\d{4}\-\d{2}\-\d{2}(\s+|T)\d{2}\:\d{2}\:\d{2}(\.|\,)\d{3}\s+(TRACE|DEBUG|NOTICE|INFO|WARN|ERROR|FATAL)'
+      pattern: '^\d{4}\-\d{2}\-\d{2}(\s+|T)\d{2}\:\d{2}\:\d{2}(\.|\,)\d{3}\s+(TRACE|DEBUG|INFO|WARN|ERROR)'
       negate: true
       match: after
-    paths:
-      - "/var/log/share/*.log"
+
+processors:
+  - if.equals.event.module: 'nginx'
+    then: [add_tags.tags: ['log', 'nginx']]
 
 output.logstash:
-  hosts: ["logstash:5044"]
+  hosts: ['logstash:5044']

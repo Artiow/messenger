@@ -1,10 +1,10 @@
 version: '3.7'
 
 services:
+  ####
+  # ELK stack
   kibana:
     image: docker.elastic.co/kibana/kibana:7.5.2
-    ports:
-      - "5601:5601"
   elasticsearch:
     build: elasticsearch/
   logstash:
@@ -12,19 +12,30 @@ services:
   filebeat:
     build: filebeat/
     volumes:
-      - "logvolume:/var/log/share"
+      - "nginx_logvolume:/var/log/share/nginx"
+      - "java_logvolume:/var/log/share/java"
+  ####
+  # infrastructure services
+  nginx:
+    build: nginx/
+    volumes:
+      - "nginx_logvolume:/var/log/nginx"
+    ports:
+      - "80:80"
   haproxy:
     build: haproxy/
     extra_hosts:
       - "internal:172.17.0.1"
+  ####
+  # application services
   eureka:
     build: eureka/
     volumes:
-      - "logvolume:/var/log"
+      - "java_logvolume:/var/log"
   account:
     build: account/
     volumes:
-      - "logvolume:/var/log"
+      - "java_logvolume:/var/log"
     depends_on:
       - eureka
       - haproxy
@@ -36,4 +47,5 @@ networks:
         - subnet: 172.18.0.0/16
 
 volumes:
-  logvolume:
+  nginx_logvolume:
+  java_logvolume:
