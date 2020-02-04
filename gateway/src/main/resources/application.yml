@@ -1,0 +1,20 @@
+spring.application.name: gateway
+server.port: 8080
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 30000
+    socket-timeout-millis: 30000
+  routes:
+    account:
+      path: /account-service/**
+      serviceId: account
+      stripPrefix: false
+      sensitiveHeaders:
+
+eureka.client.service-url:
+  defaultZone: http://eureka:8761/eureka/
+
+logging:
+  file: /var/log/gateway.log

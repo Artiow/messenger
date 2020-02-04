@@ -12,14 +12,14 @@ services:
   filebeat:
     build: filebeat/
     volumes:
-      - "nginx_logvolume:/var/log/share/nginx"
-      - "java_logvolume:/var/log/share/java"
+      - "nginx-logvolume:/var/log/share/nginx"
+      - "java-logvolume:/var/log/share/java"
   ####
   # infrastructure services
   nginx:
     build: nginx/
     volumes:
-      - "nginx_logvolume:/var/log/nginx"
+      - "nginx-logvolume:/var/log/nginx"
     ports:
       - "80:80"
   haproxy:
@@ -31,11 +31,15 @@ services:
   eureka:
     build: eureka/
     volumes:
-      - "java_logvolume:/var/log"
+      - "java-logvolume:/var/log"
+  gateway:
+    build: gateway/
+    volumes:
+      - "java-logvolume:/var/log"
   account:
     build: account/
     volumes:
-      - "java_logvolume:/var/log"
+      - "java-logvolume:/var/log"
     depends_on:
       - eureka
       - haproxy
@@ -47,5 +51,5 @@ networks:
         - subnet: 172.18.0.0/16
 
 volumes:
-  nginx_logvolume:
-  java_logvolume:
+  nginx-logvolume:
+  java-logvolume:
